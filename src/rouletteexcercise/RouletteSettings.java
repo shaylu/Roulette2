@@ -22,6 +22,19 @@ public class RouletteSettings {
             this.NumbersOnRoullete = numbers;
         }
         
+        public static RouletteType Parse(String str) throws Exception
+        {
+            switch (str)
+            {
+                case "AMERICAN":
+                    return RouletteType.AMERICAN;
+                case "FRENCH":
+                    return RouletteType.AMERICAN;
+                default:
+                    throw new Exception("Failed to parse string '" + str + "'.");
+            }
+        }
+        
     }
     
     private RouletteType _rouletteType;
