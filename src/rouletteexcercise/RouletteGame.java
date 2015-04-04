@@ -8,6 +8,7 @@ package rouletteexcercise;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Random;
 import jdk.nashorn.internal.objects.NativeArray;
@@ -29,17 +30,17 @@ public class RouletteGame {
         TRIO,
         BASKET,
         TOP_LINE,
-        MANQUE(false),
-        PASSE(false),
-        ROUGE(false),
-        NOIR(false),
-        PAIR(false),
-        IMPAIR(false),
-        PREMIERE_DOUZAINE(false),
-        MOYENNE_DOUZAINE(false),
-        DERNIERE_DOUZAINE(false),
+        MANQUE("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"),
+        PASSE("19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36"),
+        ROUGE(RouletteNumber.RouletteNumberColor.RED),
+        NOIR(RouletteNumber.RouletteNumberColor.BLACK),
+        PAIR("2", "4", "6", "8", "10", "12", "14", "16", "18", "20", "22", "24", "26", "28", "30", "32", "34", "36"),
+        IMPAIR("1", "3", "5", "7", "9", "11", "13", "15", "17", "19", "21", "23", "25", "27", "29", "31", "33", "35"),
+        PREMIERE_DOUZAINE("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"),
+        MOYENNE_DOUZAINE("13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"),
+        DERNIERE_DOUZAINE("25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36"),
         COLUMN,
-        SNAKE(false);
+        SNAKE("1", "5", "9", "12", "14", "16", "19", "23", "27", "30", "32", "34");
         
         /**
          *
@@ -51,19 +52,32 @@ public class RouletteGame {
             return BetType.valueOf(str);
         }
         
-        public boolean NeedsNumbers;
+        public final boolean NeedsNumbers;
+        public final String[] Numbers;
 
-        private BetType(boolean NeedsNumbers) {
-            this.NeedsNumbers = NeedsNumbers;
+        private BetType(String ... numbersArr) {
+            this.NeedsNumbers = false;
+            Numbers = numbersArr;
+            
+        }
+        
+        private BetType(RouletteNumber.RouletteNumberColor color) {
+            this.NeedsNumbers = false;
+            
+            ArrayList<String> temp = new ArrayList<>();
+            for(Entry<String, RouletteNumber> entry : RouletteNumbers.entrySet()) {
+                String key = entry.getKey();
+                RouletteNumber value = entry.getValue();
+                if (value.GetColor() == color)
+                    temp.add(key);
+            }
+            
+            this.Numbers = (String[])temp.toArray();
         }
 
         private BetType() {
             this.NeedsNumbers = true;
         }
-        
-        
-        
-        
     }
 
     /**

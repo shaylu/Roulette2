@@ -12,8 +12,6 @@ package rouletteexcercise;
 
 public class RouletteSettings {
 
-
-    
     public enum RouletteType {
         FRENCH(36), AMERICAN(37);
         public final int NumbersOnRoullete;

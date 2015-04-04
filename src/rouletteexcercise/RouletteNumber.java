@@ -26,6 +26,10 @@ public class RouletteNumber {
         this._number = number;
         this._color = color;
     }
+    
+    public RouletteNumberColor GetColor(){
+        return _color;
+    }
 
     @Override
     public int hashCode() {
