@@ -29,17 +29,41 @@ public class RouletteGame {
         TRIO,
         BASKET,
         TOP_LINE,
-        MANQUE,
-        PASSE,
-        ROUGE,
-        NOIR,
-        PAIR,
-        IMPAIR,
-        PREMIERE_DOUZAINE,
-        MOYENNE_DOUZAINE,
-        DERNIERE_DOUZAINE,
+        MANQUE(false),
+        PASSE(false),
+        ROUGE(false),
+        NOIR(false),
+        PAIR(false),
+        IMPAIR(false),
+        PREMIERE_DOUZAINE(false),
+        MOYENNE_DOUZAINE(false),
+        DERNIERE_DOUZAINE(false),
         COLUMN,
-        SNAKE
+        SNAKE(false);
+        
+        /**
+         *
+         * @param str
+         * @return
+         */
+        public static BetType Parse(String str) throws Exception
+        {
+            return BetType.valueOf(str);
+        }
+        
+        public boolean NeedsNumbers;
+
+        private BetType(boolean NeedsNumbers) {
+            this.NeedsNumbers = NeedsNumbers;
+        }
+
+        private BetType() {
+            this.NeedsNumbers = true;
+        }
+        
+        
+        
+        
     }
 
     /**
@@ -113,7 +137,7 @@ public class RouletteGame {
         return _round;
     }
 
-    public RouletteNumber[] GetWheel() {
+    public String[] GetWheel() {
         return _wheel;
     }
 
@@ -129,10 +153,10 @@ public class RouletteGame {
         Random random = new Random();
         int index = random.nextInt(_wheel.length);
 
-        return _wheel[index];
+        return RouletteGame.RouletteNumbers.get(_wheel[index]);
     }
 
-    public void AddPlayer(RoulettePlayer.RoulettePlayerType playerType, String name, double initialMoneyAmount) throws RoulettePlayer.PlayerNameAlreadyTakenException {
+    public void AddPlayer(RoulettePlayer.RoulettePlayerType playerType, String name, int initialMoneyAmount) throws RoulettePlayer.PlayerNameAlreadyTakenException {
         if (!_players.containsKey(name)) {
             RoulettePlayer player = new RoulettePlayer(playerType, name, initialMoneyAmount);
             _players.put(name, player);

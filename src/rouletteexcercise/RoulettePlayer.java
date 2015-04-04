@@ -15,7 +15,24 @@ public class RoulettePlayer {
     
     public enum RoulettePlayerType
     {
-        COMPUTER, HUMEN
+        COMPUTER, HUMAN;
+        
+        /**
+         *
+         * @param string
+         * @return
+         * @throws Exception
+         */
+        public static RoulettePlayerType Parse(String string) throws Exception {
+            switch (string.toUpperCase()) {
+                case "COMPUTER":
+                    return RoulettePlayerType.COMPUTER;
+                case "HUMAN":
+                    return RoulettePlayerType.HUMAN;
+                default:
+                    throw new Exception("Failed to parse " + string + " to RoulettePlayerType.");
+            }
+        }
     }
     
 
@@ -38,10 +55,10 @@ public class RoulettePlayer {
     
     private RoulettePlayerType _playerType;
     private String _name;
-    private double _money;
+    private int _money;
     private boolean _isPlaying;
 
-    public RoulettePlayer(RoulettePlayerType playerType, String name, double initialMoneyAmount) {
+    public RoulettePlayer(RoulettePlayerType playerType, String name, int initialMoneyAmount) {
         this._playerType = playerType;
         this._name = name;
         this._money = initialMoneyAmount;
@@ -53,7 +70,7 @@ public class RoulettePlayer {
         return _name;
     }
     
-    public double GetMoney()
+    public int GetMoney()
     {
         return _money;
     }
@@ -72,12 +89,12 @@ public class RoulettePlayer {
         return _playerType;
     }
     
-    public void RecieveMoney(double money)
+    public void RecieveMoney(int money)
     {
         _money += money;
     }
     
-    public void PayMoney(double money) throws NotEnoughtMoneyException
+    public void PayMoney(int money) throws NotEnoughtMoneyException
     {
         if (money > _money)
             throw new NotEnoughtMoneyException();

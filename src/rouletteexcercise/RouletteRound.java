@@ -37,8 +37,8 @@ public class RouletteRound {
 
     }
 
-    public double CalculateWinningForPlayer(String name, RouletteNumber number) {
-        double res = 0;
+    public int CalculateWinningForPlayer(String name, RouletteNumber number) {
+        int res = 0;
 
         if (_bets.containsKey(name) == true) {
             ArrayList<RouletteBet> betsPerPlayer = _bets.get(name);
@@ -54,11 +54,11 @@ public class RouletteRound {
         Random rnd = new Random();
 
         int index = rnd.nextInt(_game.GetWheel().length); // get a random number for the wheel array
-        double money = rnd.nextDouble() * player.GetMoney(); // set how much money to bet on
+        int money = rnd.nextInt(player.GetMoney() + 1); // set how much money to bet on
 
-        ArrayList<RouletteNumber> numbers = new ArrayList<>();
+        ArrayList<String> numbers = new ArrayList<>();
         numbers.add(_game.GetWheel()[index]); // adds the random number to the bets
 
-        return new RouletteBet(_game, player, numbers, money);
+        return new RouletteBet(_game, player, RouletteGame.BetType.STRAIGHT, numbers, money);
     }
 }

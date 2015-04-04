@@ -6,6 +6,7 @@
 package rouletteexcercise;
 
 import java.util.ArrayList;
+import rouletteexcercise.RouletteGame.BetType;
 
 /**
  *
@@ -13,15 +14,13 @@ import java.util.ArrayList;
  */
 public class RouletteBet {
 
-    
-
     private RouletteGame _game;
     private RoulettePlayer _player;
     private BetType _betType;
-    private ArrayList<RouletteNumber> _numbers;
-    private double _money;
+    private ArrayList<String> _numbers;
+    private int _money;
 
-    public RouletteBet(RouletteGame _game, RoulettePlayer _player, BetType _betType, ArrayList<RouletteNumber> _numbers, double _money) {
+    public RouletteBet(RouletteGame _game, RoulettePlayer _player, BetType _betType, ArrayList<String> _numbers, int _money) {
         this._game = _game;
         this._player = _player;
         this._betType = _betType;
@@ -29,10 +28,10 @@ public class RouletteBet {
         this._money = _money;
     }
 
-    public double CalculateWinning(RouletteNumber number) {
+    public int CalculateWinning(RouletteNumber number) {
         boolean won = IsNumberFound(number);
         if (won == true) {
-            double factor = ((double) _game.GetSettings().GetRouletteType().NumbersOnRoullete / (double) _numbers.size()) - (double) 1;
+            int factor = _game.GetSettings().GetRouletteType().NumbersOnRoullete / _numbers.size() -  1;
             return (_money + (_money * factor));
         } else {
             return 0;
@@ -63,28 +62,28 @@ public class RouletteBet {
     /**
      * @return the _numbers
      */
-    public ArrayList<RouletteNumber> GetNumbers() {
+    public ArrayList<String> GetNumbers() {
         return _numbers;
     }
 
     /**
      * @param _numbers the _numbers to set
      */
-    public void SetNumbers(ArrayList<RouletteNumber> _numbers) {
+    public void SetNumbers(ArrayList<String> _numbers) {
         this._numbers = _numbers;
     }
 
     /**
      * @return the _money
      */
-    public double GetMoney() {
+    public int GetMoney() {
         return _money;
     }
 
     /**
      * @param _money the _money to set
      */
-    public void SetMoney(double _money) {
+    public void SetMoney(int _money) {
         this._money = _money;
     }
 

@@ -40,7 +40,7 @@ public class RouletteSettings {
     private RouletteType _rouletteType;
     private int _minimumBetsPerPlayer;
     private int _maximumBetsPerPlayer;
-    private double _initialAmoutOfMoneyPerPlayer;
+    private int _initialAmoutOfMoneyPerPlayer;
     private int _numOfComputerizedPlayers;
     private int _numOfRealPlayers;
     private String _gameName;
@@ -60,7 +60,7 @@ public class RouletteSettings {
         return _rouletteType;
     }
     
-    public double GetInitialAmoutOfMoneyPerPlayer()
+    public int GetInitialAmoutOfMoneyPerPlayer()
     {
         return _initialAmoutOfMoneyPerPlayer;
     }

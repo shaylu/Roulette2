@@ -50,7 +50,7 @@ public class RouletteGameManager {
         for (int i = 0; i < game.GetSettings().GetNumOfRealPlayers(); i++) {
             System.out.print("Please enter Player " + (i+1) + " name: ");
             try {
-                game.AddPlayer(RoulettePlayer.RoulettePlayerType.HUMEN, s.nextLine());
+                game.AddPlayer(RoulettePlayer.RoulettePlayerType.HUMAN, s.nextLine());
             }
             catch (RoulettePlayer.PlayerNameAlreadyTakenException ex)
             {
@@ -81,7 +81,7 @@ public class RouletteGameManager {
             }
             
             // place computerized bets
-            game.GetRound().PlaceComputerizedBets();
+            //game.GetRound().PlaceComputerizedBets();
             
             // get number from wheel
             RouletteNumber number = game.TurnWheel();
@@ -89,7 +89,7 @@ public class RouletteGameManager {
             // get winning money
             for (int i = 0; i < game.GetPlayers().size(); i++) {
                 RoulettePlayer player = game.GetPlayers().get(i);
-                double winningMoney = game.GetRound().CalculateWinningForPlayer(player.GetName(), number);
+                int winningMoney = game.GetRound().CalculateWinningForPlayer(player.GetName(), number);
                 
                 if (winningMoney > 0)
                 {
@@ -109,41 +109,43 @@ public class RouletteGameManager {
     }
 
     private boolean PlaceBet(RouletteRound round, RoulettePlayer player) {
-        RouletteBet bet;
-        
-        if (player.GetPlayerType() == RoulettePlayer.RoulettePlayerType.COMPUTER)
-        {
-            bet = round.GetBetForComputerPlayer(player);
-        }
-        else
-        {
-            Scanner scanner = new Scanner(System.in);
-            
-            double money;
-            while (true) {
-                System.out.println(player.GetName() + ", place a bet (0 to stop playing or -1 to exit): ");
-                money = Double.parseDouble(scanner.nextLine());
-                if (money == 0)
-                {
-                    player.SetIsPlaying(false);
-                    return true;
-                }
-                else if (money == -1)
-                    return false;
-                
-                if (money <= player.GetMoney())
-                    break;
-                else
-                    System.out.println(player.GetName() + " has only " + player.GetMoney() + ", please make a lower bet.");
-            }
-            
-            ArrayList<RouletteNumber> numbers = new ArrayList<RouletteNumber> numbers();
-        }
-        
-        try {
-            round.PlaceBet(player, bet);
-        } catch (Exception e) {
-            
-        }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+              
+//        if (player.GetPlayerType() == RoulettePlayer.RoulettePlayerType.COMPUTER)
+//        {
+//            bet = round.GetBetForComputerPlayer(player);
+//        }
+//        else
+//        {
+//            Scanner scanner = new Scanner(System.in);
+//            
+//            double money;
+//            while (true) {
+//                System.out.println(player.GetName() + ", place a bet (0 to stop playing or -1 to exit): ");
+//                money = Double.parseDouble(scanner.nextLine());
+//                if (money == 0)
+//                {
+//                    player.SetIsPlaying(false);
+//                    return true;
+//                }
+//                else if (money == -1)
+//                    return false;
+//                
+//                if (money <= player.GetMoney())
+//                    break;
+//                else
+//                    System.out.println(player.GetName() + " has only " + player.GetMoney() + ", please make a lower bet.");
+//            }
+//            
+//            ArrayList<RouletteNumber> numbers = new ArrayList<RouletteNumber> numbers();
+//        }
+//        
+//        try {
+//            round.PlaceBet(player, bet);
+//        } catch (Exception e) {
+//            
+//        }
+//    }
     }
 }
