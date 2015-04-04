@@ -53,7 +53,7 @@ public class RouletteXMLManager {
         return res;
     }
 
-    public HashMap<String, ArrayList<RouletteBet>> ReadBets(String name) throws Exception {
+    public HashMap<String, ArrayList<String>> ReadBets(RouletteGame game, HashMap<String, RoulettePlayer> playersMap) throws Exception {
         HashMap<String, ArrayList<RouletteBet>> res = new HashMap<>();
         String playerName;
         NodeList players = document.getElementsByTagName("player");
@@ -61,8 +61,12 @@ public class RouletteXMLManager {
         for (int i = 0; i < players.getLength(); i++) {
             Node node = players.item(i);
             playerName = node.getAttributes().getNamedItem("name").getNodeValue();
-            Element betsElement = (Element) ((Element) node.getElementsByTagName("bets").item(0));
-            ArrayList<RouletteBet> bets = ReadBets(betsElement);
+            RoulettePlayer player = playersMap.get(playerName);
+            if (player != null)
+            {
+                Element betsElement = (Element) ((Element) node.getElementsByTagName("bets").item(0));
+                ArrayList<RouletteBet> bets = ReadBets(betsElement, game, player);
+            }
         }
     }
 
@@ -118,7 +122,7 @@ public class RouletteXMLManager {
         return new RoulettePlayer(playerType, name, money);
     }
 
-    private ArrayList<RouletteBet> ReadBets(Element betsElement) throws Exception{
+    private ArrayList<RouletteBet> ReadBets(Element betsElement, RouletteGame game, RoulettePlayer player) throws Exception{
         ArrayList<RouletteBet> res;
 
         if (!betsElement.hasChildNodes()) {
@@ -135,7 +139,7 @@ public class RouletteXMLManager {
 
         for (int i = 0; i < betsList.getLength(); i++) {
             Element betElement = (Element) (betsList.item(i));
-            RouletteBet bet = ReadBet(betElement);
+            RouletteBet bet = ReadBet(betElement, game, player);
             
             if (bet != null)
                 res.add(bet);
@@ -144,12 +148,23 @@ public class RouletteXMLManager {
         return res;
     }
 
-    private RouletteBet ReadBet(Element betElement) throws Exception {
+    private RouletteBet ReadBet(Element betElement, RouletteGame game, RoulettePlayer player) throws Exception {
         BetType type = BetType.Parse(betElement.getAttribute("type"));
         int money = Integer.parseInt(betElement.getAttribute("amount"));
+        ArrayList<String> numbers;
         
         if (type.NeedsNumbers == false)
-            return new RouletteBet(null, null, type, null, money)
-        
+            return new RouletteBet(game, player, type, null, money);
+        else
+        {
+            numbers = new ArrayList<>();
+            NodeList nodes = betElement.getElementsByTagName("number");
+            for (int i = 0; i < nodes.getLength(); i++) {
+                String str = nodes.item(i).getNodeValue();
+                numbers.add(str);
+            }
+            
+            return new RouletteBet(game, player, type, numbers, money);
+        }
     }
 }
