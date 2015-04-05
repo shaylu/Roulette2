@@ -50,7 +50,13 @@ public class RouletteRound {
         return res;
     }
 
-    public RouletteBet GetBetForComputerPlayer(RoulettePlayer player) {
+    public RouletteBet GetBetForComputerPlayer(RoulettePlayer player) throws Exception {
+        if (player.GetPlayerType() != RoulettePlayer.RoulettePlayerType.COMPUTER)
+            throw new Exception("Player is not a computer.");
+        
+        if (player.GetIsPlaying() == false || player.GetMoney() <= 0)
+            throw new Exception("Player is not playing or doesn'y have any money.");
+        
         Random rnd = new Random();
 
         int index = rnd.nextInt(_game.GetWheel().length); // get a random number for the wheel array
@@ -58,7 +64,27 @@ public class RouletteRound {
 
         ArrayList<String> numbers = new ArrayList<>();
         numbers.add(_game.GetWheel()[index]); // adds the random number to the bets
+        
+        try{
+            RouletteBet res = new RouletteBet(_game, player, RouletteGame.BetType.STRAIGHT, numbers, money);
+            return res;
+        }
+        catch(ExceptionInInitializerError e)
+        {
+            String msg = e.getMessage();
+            System.out.println(msg);
+            throw e;
+        }
+        
+    }
 
-        return new RouletteBet(_game, player, RouletteGame.BetType.STRAIGHT, numbers, money);
+    void PlaceComputerizedBets() throws Exception {
+        for (Entry<String, RoulettePlayer> entry : _game.GetPlayers().entrySet()){
+            RoulettePlayer player = entry.getValue();
+            if (player.GetPlayerType() == RoulettePlayer.RoulettePlayerType.COMPUTER && player.GetMoney() > 0){
+                RouletteBet bet = GetBetForComputerPlayer(player);
+                PlaceBet(player, bet);
+            }
+        }
     }
 }
