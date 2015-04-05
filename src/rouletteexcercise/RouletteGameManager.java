@@ -5,6 +5,7 @@
  */
 package rouletteexcercise;
 
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -73,15 +74,23 @@ public class RouletteGameManager {
             game.NewRound();
 
             // place bets
-            for (int i = 0; i < game.GetPlayers().size(); i++) {
-                RoulettePlayer player = game.GetPlayers().get(i);
-                
-                if (player.GetIsPlaying() == true)
-                    keepRunning = PlaceBet(game.GetRound(), player);
+            
+//            for (Entry<String, RoulettePlayer> entry : game.GetPlayers().entrySet())
+//            {
+//                RoulettePlayer player = entry.getValue();
+//               if (player.GetIsPlaying() == true && player.GetPlayerType() == RoulettePlayer.RoulettePlayerType.HUMAN)
+//                    keepRunning = PlaceBet(game.GetRound(), player);
+//            }
+            
+
+            // place computerized bets
+            try{
+                game.GetRound().PlaceComputerizedBets();
+            }
+            catch (Exception ex){
+                System.out.println(ex.getMessage());
             }
             
-            // place computerized bets
-            //game.GetRound().PlaceComputerizedBets();
             
             // get number from wheel
             RouletteNumber number = game.TurnWheel();

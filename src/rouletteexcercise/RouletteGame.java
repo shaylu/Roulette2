@@ -77,6 +77,7 @@ public class RouletteGame {
 
         private BetType() {
             this.NeedsNumbers = true;
+            Numbers = null;
         }
     }
 
@@ -172,7 +173,7 @@ public class RouletteGame {
 
     public void AddPlayer(RoulettePlayer.RoulettePlayerType playerType, String name, int initialMoneyAmount) throws RoulettePlayer.PlayerNameAlreadyTakenException {
         if (!_players.containsKey(name)) {
-            RoulettePlayer player = new RoulettePlayer(playerType, name, initialMoneyAmount);
+            RoulettePlayer player = new RoulettePlayer(this, playerType, name, initialMoneyAmount);
             _players.put(name, player);
         } else {
             throw new RoulettePlayer.PlayerNameAlreadyTakenException();

@@ -11,8 +11,6 @@ package rouletteexcercise;
  */
 public class RoulettePlayer {
 
-
-    
     public enum RoulettePlayerType
     {
         COMPUTER, HUMAN;
@@ -34,9 +32,7 @@ public class RoulettePlayer {
             }
         }
     }
-    
 
-    
     public static class PlayerNameAlreadyTakenException extends Exception
     {
         public PlayerNameAlreadyTakenException()
@@ -54,11 +50,13 @@ public class RoulettePlayer {
     }
     
     private RoulettePlayerType _playerType;
+    private RouletteGame _game;
     private String _name;
     private int _money;
     private boolean _isPlaying;
 
-    public RoulettePlayer(RoulettePlayerType playerType, String name, int initialMoneyAmount) {
+    public RoulettePlayer(RouletteGame game, RoulettePlayerType playerType, String name, int initialMoneyAmount) {
+        this._game = game;
         this._playerType = playerType;
         this._name = name;
         this._money = initialMoneyAmount;
