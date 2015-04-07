@@ -30,6 +30,10 @@ public class RouletteNumber {
     public RouletteNumberColor GetColor(){
         return _color;
     }
+    
+    public String GetName(){
+        return _number;
+    }
 
     @Override
     public int hashCode() {

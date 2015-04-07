@@ -103,7 +103,7 @@ public class RouletteBet {
 
     private boolean IsNumberFound(RouletteNumber number) {
         for (int i = 0; i < _numbers.size(); i++) {
-            if (_numbers.get(i).equals(number)) {
+            if (_numbers.get(i).equals(number.GetName())) {
                 return true;
             }
         }
@@ -127,8 +127,8 @@ public class RouletteBet {
 
     private String GetNumbersArrayString() {
         String res = new String();
-        for (String _number : _numbers) {
-            res += (_number + " ");
+        for(String object: _numbers){
+            res = res.concat(object + " ");
         }
         
         return res;

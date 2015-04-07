@@ -21,8 +21,8 @@ import rouletteexcercise.RoulettePlayer.RoulettePlayerType;
 public class RouletteGame {
     
     public enum RouletteType {
-        FRENCH(36), 
-        AMERICAN(37);
+        FRENCH(36, BetType.STRAIGHT, BetType.SPLIT, BetType.STREET, BetType.CORNER, BetType.SIX_LINE, BetType.TRIO, BetType.BASKET, BetType.MANQUE, BetType.PASSE, BetType.ROUGE, BetType.NOIR, BetType.PAIR, BetType.IMPAIR, BetType.PREMIERE_DOUZAINE, BetType.MOYENNE_DOUZAINE, BetType.DERNIERE_DOUZAINE, BetType.COLUMN, BetType.SNAKE), 
+        AMERICAN(37, BetType.STRAIGHT, BetType.SPLIT, BetType.STREET, BetType.CORNER, BetType.SIX_LINE, BetType.BASKET, BetType.TOP_LINE, BetType.MANQUE, BetType.PASSE, BetType.ROUGE, BetType.NOIR, BetType.PAIR, BetType.IMPAIR, BetType.PREMIERE_DOUZAINE, BetType.MOYENNE_DOUZAINE, BetType.DERNIERE_DOUZAINE, BetType.COLUMN, BetType.SNAKE);
         
         public final int NumbersOnRoullete;
         public final BetType[] BetsTypes;
@@ -244,7 +244,7 @@ public class RouletteGame {
         for (Entry<String, RoulettePlayer> pair : _players.entrySet()) {
             RoulettePlayer player = pair.getValue();
 
-            if (player.GetIsPlaying() == true) {
+            if (player.GetIsPlaying() == true && player.IsHuman() == true) {
                 res++;
             }
 
@@ -261,7 +261,7 @@ public class RouletteGame {
         for (Entry<String, RoulettePlayer> pair : _players.entrySet()) {
             RoulettePlayer player = pair.getValue();
 
-            if (player.GetIsPlaying() == true && player.GetMoney() == 0) {
+            if (player.GetMoney() == 0) {
                 player.SetIsPlaying(false);
             }
         }
