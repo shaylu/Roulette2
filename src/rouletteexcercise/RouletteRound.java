@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+import rouletteexcercise.RouletteGame.BetType;
 
 /**
  *
@@ -58,6 +59,7 @@ public class RouletteRound {
             throw new Exception("Player is not playing or doesn'y have any money.");
         
         Random rnd = new Random();
+        RouletteBet res;
 
         int index = rnd.nextInt(_game.GetWheel().length); // get a random number for the wheel array
         int money = rnd.nextInt(player.GetMoney() + 1); // set how much money to bet on
@@ -66,16 +68,15 @@ public class RouletteRound {
         numbers.add(_game.GetWheel()[index]); // adds the random number to the bets
         
         try{
-            RouletteBet res = new RouletteBet(_game, player, RouletteGame.BetType.STRAIGHT, numbers, money);
-            return res;
+            BetType betType = BetType.STRAIGHT;
+            res = new RouletteBet(this._game, player, betType, numbers, money);
         }
         catch(ExceptionInInitializerError e)
         {
-            String msg = e.getMessage();
-            System.out.println(msg);
             throw e;
         }
         
+        return res;
     }
 
     void PlaceComputerizedBets() throws Exception {

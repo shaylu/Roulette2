@@ -6,7 +6,7 @@
 package rouletteexcercise;
 
 import java.util.HashMap;
-import rouletteexcercise.RouletteSettings.RouletteType;
+import rouletteexcercise.RouletteGame.RouletteType;
 
 /**
  *

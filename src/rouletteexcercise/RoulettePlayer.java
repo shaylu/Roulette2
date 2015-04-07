@@ -11,6 +11,13 @@ package rouletteexcercise;
  */
 public class RoulettePlayer {
 
+    boolean IsHuman() {
+        if (_playerType == RoulettePlayerType.HUMAN)
+            return true;
+        else
+            return false;
+    }
+
     public enum RoulettePlayerType
     {
         COMPUTER, HUMAN;

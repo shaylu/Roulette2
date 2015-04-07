@@ -19,7 +19,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import rouletteexcercise.RouletteGame.BetType;
-import rouletteexcercise.RouletteSettings.RouletteType;
+import rouletteexcercise.RouletteGame.RouletteType;
 
 /**
  *

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package rouletteexcercise;
+import rouletteexcercise.RouletteGame.RouletteType;
 
 /**
  *
@@ -12,29 +13,6 @@ package rouletteexcercise;
 
 public class RouletteSettings {
 
-    public enum RouletteType {
-        FRENCH(36), AMERICAN(37);
-        public final int NumbersOnRoullete;
-
-        private RouletteType(int numbers) {
-            this.NumbersOnRoullete = numbers;
-        }
-        
-        public static RouletteType Parse(String str) throws Exception
-        {
-            switch (str)
-            {
-                case "AMERICAN":
-                    return RouletteType.AMERICAN;
-                case "FRENCH":
-                    return RouletteType.AMERICAN;
-                default:
-                    throw new Exception("Failed to parse string '" + str + "'.");
-            }
-        }
-        
-    }
-    
     private RouletteType _rouletteType;
     private int _minimumBetsPerPlayer;
     private int _maximumBetsPerPlayer;

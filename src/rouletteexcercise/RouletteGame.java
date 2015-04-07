@@ -19,8 +19,34 @@ import rouletteexcercise.RoulettePlayer.RoulettePlayerType;
  * @author Shay
  */
 public class RouletteGame {
+    
+    public enum RouletteType {
+        FRENCH(36), 
+        AMERICAN(37);
+        
+        public final int NumbersOnRoullete;
+        public final BetType[] BetsTypes;
 
-    public static enum BetType {
+        private RouletteType(int numbers, BetType ... betsTypes) {
+            this.NumbersOnRoullete = numbers;
+            this.BetsTypes = betsTypes;
+        }
+        
+        public static RouletteType Parse(String str) throws Exception
+        {
+            switch (str)
+            {
+                case "AMERICAN":
+                    return RouletteType.AMERICAN;
+                case "FRENCH":
+                    return RouletteType.AMERICAN;
+                default:
+                    throw new Exception("Failed to parse string '" + str + "'.");
+            }
+        }
+    }
+    
+    public enum BetType {
 
         STRAIGHT,
         SPLIT,
@@ -52,8 +78,9 @@ public class RouletteGame {
             return BetType.valueOf(str);
         }
         
-        public final boolean NeedsNumbers;
-        public final String[] Numbers;
+        public boolean NeedsNumbers;
+        public String[] Numbers;
+        
 
         private BetType(String ... numbersArr) {
             this.NeedsNumbers = false;
@@ -72,10 +99,14 @@ public class RouletteGame {
                     temp.add(key);
             }
             
-            this.Numbers = (String[])temp.toArray();
+            this.Numbers = new String[temp.size()];
+            for (int i = 0; i < temp.size(); i++) {
+                this.Numbers[i] = temp.get(i);
+            }
         }
 
         private BetType() {
+
             this.NeedsNumbers = true;
             Numbers = null;
         }
@@ -151,6 +182,10 @@ public class RouletteGame {
     public RouletteRound GetRound() {
         return _round;
     }
+    
+    public boolean IsNumberValidForBet(String num) {
+        return Arrays.asList(_wheel).contains(num);
+    }
 
     public String[] GetWheel() {
         return _wheel;
@@ -186,8 +221,7 @@ public class RouletteGame {
 
     public void CreateComputerizedPlayers() {
         Random rnd = new Random();
-        HashMap<Integer, String> names = new HashMap<Integer, String>();
-
+        
         ArrayList<String> computerizedNamesArrayCopy = new ArrayList<String>();
         computerizedNamesArrayCopy.addAll(Arrays.asList(_computerizedPlayerNames));
 
@@ -199,6 +233,7 @@ public class RouletteGame {
                 computerizedNamesArrayCopy.remove(computerizedNamesArrayCopy.get(index)); // remove the chosen name from names copy array
             } catch (RoulettePlayer.PlayerNameAlreadyTakenException ex) {
                 // can't get here
+                i--;
             }
         }
     }
@@ -229,7 +264,6 @@ public class RouletteGame {
             if (player.GetIsPlaying() == true && player.GetMoney() == 0) {
                 player.SetIsPlaying(false);
             }
-
         }
     }
 

@@ -103,11 +103,36 @@ public class RouletteBet {
 
     private boolean IsNumberFound(RouletteNumber number) {
         for (int i = 0; i < _numbers.size(); i++) {
-            if (number.equals(number)) {
+            if (_numbers.get(i).equals(number)) {
                 return true;
             }
         }
 
         return false;
     }
+
+    @Override
+    public String toString() {
+        return (this._player.GetName() + " bet: " + this._money + ", Bet Type:  " + this._betType.name() + GetNumbersString() );
+    }
+
+    private String GetNumbersString() {
+        if ( GetBetType().NeedsNumbers == true)
+        {
+            return ", Numbers: " + GetNumbersArrayString();
+        }
+        else
+            return "";
+    }
+
+    private String GetNumbersArrayString() {
+        String res = new String();
+        for (String _number : _numbers) {
+            res += (_number + " ");
+        }
+        
+        return res;
+    }
+    
+    
 }
