@@ -91,7 +91,7 @@ public class RouletteGameManager {
             // get number from wheel
             RouletteNumber number = game.TurnWheel();
             System.out.println("\nTurning wheel...... \nThe roulette number won is: " + number.GetName());
-
+            System.out.println("==================================");
             // get winning money
             for (Entry<String, RoulettePlayer> playerEntry : game.GetPlayers().entrySet()) {
                 RoulettePlayer player = playerEntry.getValue();
@@ -167,12 +167,12 @@ public class RouletteGameManager {
 
         try {
             round.PlaceBet(player, bet);
-            System.out.println(bet);
+            System.out.println("\n" + bet);
         } catch (RoulettePlayer.NotEnoughtMoneyException e) {
             return PlaceBets(game, round, player);
         }
 
-        System.out.println("Place another bet (y/n)?");
+        System.out.println("\nPlace another bet (y/n)?");
         Scanner scanner = new Scanner(System.in);
         String str = scanner.nextLine();
         if (str.equals("y")) {
@@ -183,13 +183,18 @@ public class RouletteGameManager {
     }
 
     private RouletteGame.BetType GetBetTypeFromConsole(RouletteGame.RouletteType type) {
-        System.out.println("Choose bet type: ");
+        System.out.println("\nChoose bet type: ");
 
         RouletteGame.BetType[] betTypes = type.BetsTypes;
         for (int i = 0; i < betTypes.length; i++) {
-            System.out.println((i + 1) + ". " + betTypes[i].name());
+            System.out.print((i + 1) + ". " + betTypes[i].name() +"\t");
+            
+            if (i % 5 == 0)
+                System.out.println("");
         }
+        System.out.print("\n");
 
+        System.out.print("Your selection: ");
         Scanner scanner = new Scanner(System.in);
         int selection = Integer.parseInt(scanner.nextLine());
 
@@ -203,7 +208,7 @@ public class RouletteGameManager {
     }
 
     private ArrayList<String> ReadNumbersFromConsole(RouletteGame game, RouletteGame.BetType type) {
-        System.out.println("How many numbers do you want to give ?");
+        System.out.print("\nHow many numbers do you want to give? ");
         Scanner scanner = new Scanner(System.in);
         String str = scanner.nextLine();
         Integer numbersToGet = Integer.parseInt(str);
@@ -230,7 +235,7 @@ public class RouletteGameManager {
 
     private int ReadAmountOfMoneyFromPlayer(int max) {
         while (true) {
-            System.out.println("Place a bet between 0 to " + max + ": ");
+            System.out.println("\nPlace a bet between 0 to " + max + ": ");
             Scanner scanner = new Scanner(System.in);
             String str = scanner.nextLine();
             Integer money = Integer.parseInt(str);
@@ -242,7 +247,7 @@ public class RouletteGameManager {
     }
 
     private boolean AskPlayerIfHeWantsToKeepPlaying(RoulettePlayer player) {
-        System.out.print(player.GetName() + ", would you like to place a bet (y) or game out (n)? ");
+        System.out.print("\n" + player.GetName() + ", would you like to place a bet (y) or game out (n)? ");
 
         Scanner scanner = new Scanner(System.in);
         String str = scanner.nextLine();
