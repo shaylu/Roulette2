@@ -25,6 +25,20 @@ public class RouletteRound {
         _game = game;
         _bets = new HashMap<String, ArrayList<RouletteBet>>();
     }
+    
+    void SetBankruppedPlayersAsNotPlaying() {
+        for (Entry<String, RoulettePlayer> pair : _game.GetPlayers().entrySet()) {
+            RoulettePlayer player = pair.getValue();
+
+            if (player.GetMoney() == 0) {
+                player.SetIsPlaying(false);
+            }
+        }
+    }
+    
+    public void EndRound(){
+        SetBankruppedPlayersAsNotPlaying();
+    }
 
     public void PlaceBet(RoulettePlayer player, RouletteBet bet) throws RoulettePlayer.NotEnoughtMoneyException {
         String playerName = player.GetName();

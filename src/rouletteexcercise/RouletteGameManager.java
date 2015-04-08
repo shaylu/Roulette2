@@ -106,7 +106,7 @@ public class RouletteGameManager {
                 }
             }
 
-            game.SetBankruppedPlayersAsNotPlaying();
+            game.EndRound();
         }
 
         System.out.println("\nNo more active human players left.");
@@ -271,7 +271,6 @@ public class RouletteGameManager {
                     players[j - 1] = players[j];
                     players[j] = temp;
                 }
-
             }
         }
     }

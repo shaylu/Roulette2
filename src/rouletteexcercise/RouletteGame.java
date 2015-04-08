@@ -19,6 +19,10 @@ import rouletteexcercise.RoulettePlayer.RoulettePlayerType;
  * @author Shay
  */
 public class RouletteGame {
+
+    void EndRound() {
+        this._round.EndRound();
+    }
     
     public enum RouletteType {
         FRENCH(36, BetType.STRAIGHT, BetType.SPLIT, BetType.STREET, BetType.CORNER, BetType.SIX_LINE, BetType.TRIO, BetType.BASKET, BetType.MANQUE, BetType.PASSE, BetType.ROUGE, BetType.NOIR, BetType.PAIR, BetType.IMPAIR, BetType.PREMIERE_DOUZAINE, BetType.MOYENNE_DOUZAINE, BetType.DERNIERE_DOUZAINE, BetType.COLUMN, BetType.SNAKE), 
@@ -257,14 +261,6 @@ public class RouletteGame {
         _round = new RouletteRound(this);
     }
 
-    void SetBankruppedPlayersAsNotPlaying() {
-        for (Entry<String, RoulettePlayer> pair : _players.entrySet()) {
-            RoulettePlayer player = pair.getValue();
-
-            if (player.GetMoney() == 0) {
-                player.SetIsPlaying(false);
-            }
-        }
-    }
+    
 
 }
