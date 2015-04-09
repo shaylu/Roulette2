@@ -6,6 +6,8 @@
 package rouletteexcercise;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import rouletteexcercise.RouletteGame.BetType;
 
 /**
@@ -24,7 +26,11 @@ public class RouletteBet {
         this._game = _game;
         this._player = _player;
         this._betType = _betType;
-        this._numbers = _numbers;
+        
+        if (_numbers == null)
+            _numbers = new ArrayList<String>(Arrays.asList(_betType.Numbers));
+                    
+                    this._numbers = _numbers;
         this._money = _money;
     }
 
@@ -102,6 +108,7 @@ public class RouletteBet {
     }
 
     private boolean IsNumberFound(RouletteNumber number) {
+        
         for (int i = 0; i < _numbers.size(); i++) {
             if (_numbers.get(i).equals(number.GetName())) {
                 return true;
@@ -113,7 +120,7 @@ public class RouletteBet {
 
     @Override
     public String toString() {
-        return (this._player.GetName() + " bet: " + this._money + ", Bet Type:  " + this._betType.name() + GetNumbersString() );
+        return (this._player.GetName() + " bet: " + this._money + ", Bet Type: " + this._betType.name() + GetNumbersString() );
     }
 
     private String GetNumbersString() {
